@@ -12,6 +12,20 @@ var btnFloat=document.getElementById('float-btn');
 var btnClose=document.getElementsByClassName('close')[0];
 var floatWrap=document.getElementById('float-wrap');
 var body=document.body;
+function autoCenter(el) {
+    var bodyW = document.documentElement.clientWidth;
+    var bodyH = document.documentElement.clientHeight;
+
+    var elW = el.offsetWidth;
+    var elH = el.offsetHeight;
+
+    el.style.left = (bodyW - elW)/2+ "px";
+    el.style.top = (bodyH - elH)/2+ "px";
+    console.log(bodyW);
+    console.log(elW);
+    console.log(el);
+}
+
 function getHover(divFloat){
     var box=divFloat.parentNode;
     var height=box.clientHeight;
@@ -28,15 +42,15 @@ function getHover(divFloat){
 }
 btnFloat.onclick=function(){
     floatWrap.className='show';
+    autoCenter(floatWrap);
     getHover(floatWrap);
 };
 btnClose.onclick=function(){
     floatWrap.className='noShow';
     floatWrap.previousElementSibling.className='noShow';
 };
-function Move(wrap){
 
-}
+
 
 
 
