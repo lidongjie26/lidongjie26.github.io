@@ -21,9 +21,6 @@ function autoCenter(el) {
 
     el.style.left = (bodyW - elW)/2+ "px";
     el.style.top = (bodyH - elH)/2+ "px";
-    console.log(bodyW);
-    console.log(elW);
-    console.log(el);
 }
 
 function getHover(divFloat){
