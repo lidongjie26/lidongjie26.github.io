@@ -22,9 +22,9 @@ var cur={
     x:0,
     y:0
 };
-var dx,dy,nx,ny,x,y;
+var dx,dy,nx,ny,x,y,target;
 function down(){
-    var target=Util.getTarget(event);
+    target=Util.getTarget(event);
     flag=true;
     cur.x=event.pageX;
     cur.y=event.pageY;
@@ -34,7 +34,6 @@ function down(){
 }
 function move(){
     if(flag==true){
-        var target=Util.getTarget(event);
         nx=event.pageX-cur.x;
         ny=event.pageY-cur.y;
         x=dx+nx;
