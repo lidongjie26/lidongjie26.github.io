@@ -49,7 +49,7 @@ function move(){
         target.style.left=x+'px';
         target.style.top=y+'px';
     }
-    event.stopPropagation();
+    event.stopPropagation();//事件绑定直到父元素，不到子元素
 }
 function stop(){
     flag=false;
