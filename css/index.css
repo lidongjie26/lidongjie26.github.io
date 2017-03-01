@@ -1,3 +1,9 @@
 a{
     display:block;
 }
+a:link{
+    color:#0063dc;
+}
+a:visited{
+    color:#0063dc;
+}
