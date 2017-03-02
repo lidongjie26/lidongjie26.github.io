@@ -1,0 +1,30 @@
+.textBox{
+    height:40px;
+    width:500px;
+    border:1px solid #4e5766;
+    font:20px "Microsoft YaHei UI";
+}
+.btn{
+    height: 45px;
+    width:80px;
+    background:#0063dc;
+    border-radius:5px;
+    color:#fff;
+    border:none;
+
+}
+table{
+    text-align: center;
+}
+.table{
+    width:600px;
+    border-collapse: collapse;
+    margin:100px auto;
+}
+th{
+    background:#666666;
+    color:#fff;
+}
+th,td{
+    border:1px solid #000000;
+}
