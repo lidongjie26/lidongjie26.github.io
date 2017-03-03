@@ -17,7 +17,7 @@ var util={
 function newTable(){
     var table=document.createElement('table');
     table.className='table';
-    table.innerHTML='<tr><th>姓名</th><th>语文<span class="low">▲</span><span class="high">▼</span></th><th>数学<span class="low">▲</span><span class="high">▼</span></th><th>英语<span class="low">▲</span><span class="high">▼</span></th><th>总分<span class="low">▲</span><span class="high">▼</span></th></tr>';
+    table.innerHTML='<tr><th>姓名</th><th>语文<div class="low">▲</div><div class="high">▼</div></th><th>数学<div class="low">▲</div><div class="high">▼</div></th><th>英语<div class="low">▲</div><div class="high">▼</div></th><th>总分<div class="low">▲</div><div class="high">▼</div></th></tr>';
     document.body.appendChild(table);
     return table;
 }
@@ -36,7 +36,6 @@ function insertRow(table,arr){
             arr.pop();
         }
     }
-    console.log(arr.length);
     for(var i=0;i<arr.length;i++){
         if(i!==0){
             count+=parseInt(arr[i]);
@@ -72,6 +71,8 @@ $("#btnInsertRow")[0].onclick=function(){
     var tables=document.getElementsByTagName('table');
     var table=tables[tables.length-1];
     insertRow(table,arr);
+    $('#textBox')[0].value='';
+    $('#textBox')[0].focus();
 }
 $("#btnDeleteTable")[0].onclick=function(){
     var tables=document.getElementsByTagName('table');
@@ -84,22 +85,76 @@ $('#btnDeleteRow')[0].onclick=function(){
     tr.parentNode.removeChild(tr);
 }
 //排序
-function sortNumber(a,b){
-    var aNumber=parseInt(a.firstElementChild.innerHTML);
-    var bNumber=parseInt(b.firstElementChild.innerHTML);
-    return aNumber-bNumber;
+/*实现思想很简单：
+
+ 1.为每一个表头绑定一个click事件，传入序列号i；
+
+ 2.click事件中，用临时数组temp_arr保存被点击的表头对应的列内容，temp_tr_arr保存临时tr数组；
+
+ 3.删掉原来的tr；
+
+ 4.对temp_arr中的数据排序；
+
+ 5.根据排序结果append(tr)；
+*
+* */
+var target;
+function lowSort(a,b){
+    return a-b;
+}
+function hightSort(a,b){
+    return b-a;
 }
 var range={
     low:function(e){
-        var target=util.getTarget(e);
-        var col=$(target.parentNode).index();
-        var table=target.parentNode.parentNode.parentNode
-        var rows=table.rows;
-        rows.sort(sortNumber);
+        target=util.getTarget(e);
+        var col=$(target.parentNode).index();//获得表格的列数
+        var tbody=target.parentNode.parentNode.parentNode;
+        var table=tbody.parentNode//获得表格
+        var rows=table.rows;//获得表格每一行的数组
+        var temp_arr=[];
+        var temp_tr_arr=[];
+        for(var i=1;i<rows.length;i++){
+            temp_arr.push(parseInt(table.rows[i].cells[col].innerHTML));
+            temp_tr_arr.push(table.rows[i]);
+        }
+        for(var j=1;j<rows.length;j++){
+            table.removeChild(table.lastElementChild)
+        }
+        temp_arr.sort(lowSort);
+        for(var x=0;x<temp_arr.length;x++){
+            for(var y=0;y<temp_tr_arr.length;y++){
+                if(parseInt(temp_tr_arr[y].cells[col].innerHTML)==temp_arr[x]){
+                    table.appendChild(temp_tr_arr[y]);
+                }
+            }
+        }
     },
-    high:function(){
-
+    high:function(e){
+        target=util.getTarget(e);
+        var col=$(target.parentNode).index();//获得表格的列数
+        var tbody=target.parentNode.parentNode.parentNode;
+        var table=tbody.parentNode//获得表格
+        var rows=table.rows;//获得表格每一行的数组
+        var temp_arr=[];
+        var temp_tr_arr=[];
+        for(var i=1;i<rows.length;i++){
+            temp_arr.push(parseInt(table.rows[i].cells[col].innerHTML));
+            temp_tr_arr.push(table.rows[i]);
+        }
+        for(var j=1;j<rows.length;j++){
+            table.removeChild(table.lastElementChild)
+        }
+        temp_arr.sort(hightSort);
+        for(var x=0;x<temp_arr.length;x++){
+            for(var y=0;y<temp_tr_arr.length;y++){
+                if(parseInt(temp_tr_arr[y].cells[col].innerHTML)==temp_arr[x]){
+                    table.appendChild(temp_tr_arr[y]);
+                }
+            }
+        }
     }
 };
-util.addHandle('click',$('.low'),range.low);
-$('.low').onclick=range.low;
+//jquery事件绑定，为当前或未来的元素绑定事件
+$(document).delegate('.low','click',range.low);
+$(document).delegate('.high','click',range.high);

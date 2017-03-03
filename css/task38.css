@@ -28,3 +28,12 @@ th{
 th,td{
     border:1px solid #000000;
 }
+.low:hover{
+    color:#0063dc;
+}
+.high:hover{
+    color:#0063dc;
+}
+.low,.high{
+    display:inline;
+}
