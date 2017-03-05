@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面测试</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        #div1{
+            margin: 15px;
+            padding:50px;
+            width:300px;
+            height:300px;
+            background:#0063dc;
+            overflow: hidden;
+        }
+        #div2 {
+            padding:5px;
+            margin: 10px;
+            max-height: 200px;
+            width: 200px;
+            background: #000000;
+            color: #ffffff;
+            border: 5px solid #fff;
+            overflow-y:auto;
+        }
+
+        #div3{
+            background:#666666;
+            width:100px;
+           overflow: hidden;
+        }
+        #div4{
+            background:#0063dc;
+            height:50px;
+            width: 50px;
+            float:left;
+        }
+        img{
+            position:absolute;
+            top:5px;
+            right:5px;
+        }
+    </style>
+</head>
+<body>
+    <div id='div1' >
+        <div id='div2'>
+            testtesttest
+            testtesttest
+            testtestt
+            testtestte
+            testtest
+            testtesttestt
+            testtesttest
+            testtesttest
+            testtesttestte
+            testtesttes
+            testtest
+            testtesttestt
+            testtesttest
+            testtesttest
+            testtesttestte
+
+            testtesttes
+            testtest
+            testtesttestt
+            testtesttest
+            testtesttest
+            testtesttestte
+            testtesttes
+            testtest
+            testtesttes
+            testtest
+            testtesttestt
+            testtesttest
+            testtesttest
+            testtesttestte
+            testtesttes
+            testtest
+        </div>
+</div>
+    <div id="div3">
+        <div id="div4">4</div>
+    </div>
+
+<script>
+    //max-height：当容器内容大于容器设置的宽度或者高度时想使其出现滚动条，可以使用max-height来设置容器最大高度
+    var div1=document.getElementById('div1');
+    var div2=document.getElementById('div2');
+    document.write('div2.offsetHeight:'+div2.offsetHeight+' 对象的可见区域+滚动条（包括width+padding+border，滚动条隐藏的高度也不包括）<br>');
+    document.write('div2.offsetWidth:'+div2.offsetWidth+'<br>');
+    document.write('div2.clientHeight:'+div2.clientHeight+' 对象的可视区域（不包括滚动条，不包括border，滚动条隐藏的高度也不包括）<br>');
+    document.write('div2.clientWidth:'+div2.clientWidth+'<br>');
+    document.write('div2.scrollHeight:'+div2.scrollHeight+'获取对象的滚动高度，包括滚动隐藏的内容，不包括border。不包括滚动条宽度<br>');
+    document.write('div2.scrollWidth:'+div2.scrollWidth+'<br>');
+
+
+    document.write('div2.offsetLeft:'+div2.offsetLeft+' 相对于父元素或者版面的左边距，父元素可以定位，则是相对与父元素，父元素不能定位，相对于页面<br>');
+    document.write('div2.offsetTop:'+div2.offsetTop+'<br>');
+    document.write('div2.clientLeft:'+div2.clientLeft+' 获取对象的border宽度<br>');
+    document.write('div2.clientTop:'+div2.clientTop+'<br>');
+    document.write('div2.scrollLeft:'+div2.scrollLeft+'<br>');
+    document.write('div2.scrollTop:'+div2.scrollTop+'<br>');
+
+
+    document.write('div2.pageX:'+div2.pageX+'<br>');
+    document.write('div2.clientX:'+div2.clientX+'<br>');
+    document.write('div2.screenX:'+div2.screenX+'<br>');
+
+</script>
+    <img src="image/clipboard.png">
+</body>
+</html>

@@ -186,5 +186,4 @@
         var tr = trs[trs.length - 1];
         tr.parentNode.removeChild(tr);
     }
-
 })();
