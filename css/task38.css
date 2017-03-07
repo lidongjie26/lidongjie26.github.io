@@ -34,3 +34,10 @@ th,td{
 .low,.high{
     display:inline;
 }
+.wrap{
+    height:800px;
+    width:100%;
+}
+.trFloat{
+    position:fixed;
+}

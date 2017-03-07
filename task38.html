@@ -10,12 +10,13 @@
     <p>1.提供生成表格的接口，表格中的数据，表格样式尽量低耦合</p>
     <p>2.可以配置对哪些列支持排序功能，并在表头进行排序按钮的显示，图中的样式为示意参考，可自行设定样式及交互方式</p>
     <p>3.提供点击排序按钮后的响应接口，并提供默认的排序方法，当提供的接口没有具体实现时，按默认的排序方法进行排序操作，并更新表格中的数据显示。</p>
+    <p>4.提供冻结表头的功能</p>
     <input type="text" class="textBox" id="textBox" placeholder="空格为间隔" />
     <input type="button" class="btn" id="btnInsertRow" value="插入行">
     <input type="button" class="btn" id="btnDeleteTable" value="删除表格">
     <input type="button" class="btn" id="btnDeleteRow" value="删除行">
-
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/task38-tableTools.js"></script>
+    <div class="wrap"></div>
 </body>
 </html>

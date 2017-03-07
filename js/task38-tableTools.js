@@ -186,4 +186,35 @@
         var tr = trs[trs.length - 1];
         tr.parentNode.removeChild(tr);
     }
+    $(window).scroll(function(){
+
+        var tr=tb.firstElementChild;
+        var trTop=tb.offsetTop;
+        var trLeft=tb.offsetLeft;
+        var tbHeight=tb.scrollHeight;
+        var trHeight=tr.offsetHeight;
+        var trClone;
+        if($(window).scrollTop()<=trTop){
+            if(tb.lastElementChild.className=='trFloat'){
+                tb.removeChild(tb.lastElementChild);
+            }
+        }else if($(window).scrollTop()>trTop&&$(window).scrollTop()<(trTop+tbHeight)){
+            trClone=tr.cloneNode(true);
+            trClone.className='trFloat';
+            if(tb.lastElementChild.className!=='trFloat'){
+                tb.appendChild(trClone);
+            }else{
+                trClone=tb.lastElementChild;
+            }
+            trClone.style.top='0';
+            trClone.style.left=trLeft+'px';
+        }else if($(window).scrollTop()>=(trTop+tbHeight)){
+            if(tb.lastElementChild.className=='trFloat'){
+                tb.removeChild(tb.lastElementChild);
+            }
+        }
+
+
+
+    });
 })();
