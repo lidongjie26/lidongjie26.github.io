@@ -37,6 +37,7 @@ th,td{
 .wrap{
     height:800px;
     width:100%;
+    overflow:hidden;
 }
 .trFloat{
     position:fixed;
