@@ -1,10 +1,13 @@
+/**
+ * Created by 李冬杰 on 2017/3/10.
+ */
 /*
-* 1.首先是日历组件框架
-* 2.日历组件中有一个头，头中有年 月
-* 3.身子是一个table，table中有7列，行数不确定
-* 4.首先功能是获取这个月的1号是星期几
-*
-* */
+ * 1.首先是日历组件框架
+ * 2.日历组件中有一个头，头中有年 月
+ * 3.身子是一个table，table中有7列，行数不确定
+ * 4.首先功能是获取这个月的1号是星期几
+ *
+ * */
 (function(){
 
     var current={
@@ -17,7 +20,9 @@
         nextMonthDays:0,
         rows:0,//这个月日历多少行
         firstDay:0,//第一天星期几
-        weekName:['日','一','二','三','四','五','六']
+        weekName:['日','一','二','三','四','五','六'],
+        self:null,
+        select:document.getElementById('select-date')
     }
     var util={
         addHandler:function(element,type,handle){
@@ -35,7 +40,7 @@
     };
     function getCurrentTime(){
         var time=new Date();
-         current.year=time.getFullYear();
+        current.year=time.getFullYear();
         current.month=time.getMonth()+1;
         current.day=time.getDate();
         current.week=time.getDay();
@@ -128,10 +133,14 @@
             }
             table.appendChild(tr);
         }
+        current.self=table;
     }
     function showDate(){
         var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
         td.className='showDate';
+        current.select.value=current.year+'-'+current.month+'-'+current.day;
+        $(current.self).fadeOut(500);
+
     }
     function changeDate(e){
         var target=util.getTarget(e);
@@ -140,7 +149,8 @@
         showDate();
     }
     function nextMonth(){
-        document.body.innerHTML='';
+        current.self.parentNode.removeChild(current.self);
+        current.self=null;
         if(current.month==12){
             current.year+=1;
             current.month=1;
@@ -165,10 +175,10 @@
         getMonthDays();
         getArr();
         createTable(current);
-        showDate();
     }
     function previousMonth(){
-        document.body.innerHTML='';
+        current.self.parentNode.removeChild(current.self);
+        current.self=null;
         if(current.month==1){
             current.month=12;
             current.year-=1;
@@ -194,18 +204,26 @@
         getMonthDays();
         getArr();
         createTable(current);
-        showDate();
     }
+    function init(){
+        getCurrentTime();
+        getMonthDays();
+        getArr();
+        createTable(current);
+        current.self.className='table_hide';
+    }
+    init();
     //先做日历身
-    getCurrentTime();
-    getMonthDays();
-    getArr();
-    createTable(current);
-    showDate();
     $(document).delegate('.show', 'click', changeDate);
     $(document).delegate('#btn-next','click',nextMonth);
     $(document).delegate('#btn-previous','click',previousMonth);
     //显示当前日期的特殊，点击某个日期则给这个日期特殊
     //点击前进后退则日期改变。
+
+    //点击文本框日历面板显示，再点击隐藏
+    //选择日期则面板隐藏，日期出现再框中
+    $(document).delegate('#select-date','click',function(){
+        $('table').fadeToggle();
+    });
 
 })();
