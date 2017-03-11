@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包理解</title>
+</head>
+<body>
+    <h1>闭包理解</h1>
+    <p>一个函数在另一个函数中,内部函数可以调用外部函数的属性和方法，而外部函数不能调用内部函数的属性和方法</p>
+    <p>
+        函数a中有函数b，c，d<br>
+        b是在函数外声明，在函数内赋值，所以如果a执行了，b才赋值，b才是一个函数，b实际上是一个全局变量<br>
+        d是函数内部声明的方法（var在函数内），但是无论函数a执行与否，我们都不能获取d或者其他函数内部的属性方法（道理还是闭包原理：外部函数无法获得内部函数的属性和方法）<br>
+        c是设计模式中常见的方法，将return写在函数声明前面，只有通过这种方法我们就可以获取函数内部的属性和方法。<br>
+        c作为返回的函数怎么用？var c=a（）；c（）；return的只是一个函数名，而不是执行的函数,所以还是要将执行的函数a作为变量，再执行
+        PS:function c(){}基本上等同于var c=function(){}，所以c还是内部方法<br>
+            函数虽然是一个对象，但是和对象不同，对象的属性和方法都能使用，而函数的内部属性和方法只能通过return 再外部用或者通过闭包在内部用
+    </p>
+    <p>
+        var b;<br>
+        function a(x){<br>
+        &nbsp b=function(x){<br>
+        &nbsp&nbsp document.write(x);<br>
+        &nbsp  };<br>
+        var d=function(x){<br>
+        &nbsp   document.write(x);<br>
+            }<br>
+            return function c(x){<br>
+        &nbsp     return x;<br>
+            };<br>
+        }<br>
+        var c=a(5);<br>
+        b(5);<br>
+        var y=c(6);<br>
+        document.write(y);v
+    </p>
+    <script>
+        var b;
+        function a(x){
+            b=function(x){
+                document.write(x);
+            };
+            var d=function(x){
+                document.write(x);
+            }
+            return function c(x){
+                return x;
+            };
+
+        }
+        var c=a(5);
+        b(5);
+         var y=c(6);
+        document.write(y);
+    </script>
+</body>
+</html>
