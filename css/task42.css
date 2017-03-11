@@ -1,0 +1,86 @@
+table{
+    margin:10px 0;
+    font:20px "Microsoft YaHei UI";
+    border-collapse: collapse;
+    border-spacing:0;
+}
+.table_hide{
+    display:none;
+}
+.table_show{
+    display:block;
+}
+td{
+    width:50px;
+    height:50px;
+    text-align:center;
+    border:none;
+    padding:0;
+}
+.no-show{
+    background:#5a5b5b;
+    color:#fff;
+}
+.show{
+    background:#0063dc;
+    color:#fff;
+}
+.showDate{
+    border:1px solid #f00;
+    background:#ffffff;
+    color:#f00;
+}
+tr{
+    border:none;
+}
+.tr-title{
+    background:#0063dc;
+    color:#ffffff;
+    position:relative;
+    overflow: hidden;
+
+}
+#btn-next{
+    display:inline;
+    position:relative;
+    left:100px;
+}
+#btn-previous{
+    display:inline;
+    position:relative;
+    left:-100px;
+
+}
+.select-date {
+    display: block;
+    border: 1px solid #000;
+    width: 350px;
+    height: 30px;
+    margin: 80px auto 0 auto;
+    font: 16px "Microsoft YaHei UI";
+    border-radius: 5px;
+    display:inline-block;
+}
+.btn{
+    display:inline;
+    height: 30px;
+    width:80px;
+    background:#fff;
+    color:#000;
+    border-radius:5px;
+    border:none;
+    margin:0 22px 0 22px;
+}
+.td-buttom{
+    background:#0063dc;
+    color:#ffffff;
+}
+#select-type{
+    height:40px;
+    width:100px;
+    background:#0063dc;
+    color:#ffffff;
+    border-radius:5px;
+    border:none;
+    display:inline;
+}

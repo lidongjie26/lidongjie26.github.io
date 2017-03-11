@@ -1,5 +1,5 @@
 /**
- * Created by 李冬杰 on 2017/3/10.
+ * Created by 李冬杰 on 2017/3/11.
  */
 /*
  * 1.首先是日历组件框架
@@ -23,7 +23,8 @@
         weekName:['日','一','二','三','四','五','六'],
         self:null,
         select:document.getElementById('select-date'),
-        method:true
+        method:true,
+        lastDay:{}
     }
     var util={
         addHandler:function(element,type,handle){
@@ -134,18 +135,35 @@
             }
             table.appendChild(tr);
         }
+        var tr=document.createElement('tr');
+        var td=document.createElement('td');
+        tr.appendChild(td);
+        td.colSpan='7';
+        td.className='td-buttom';
+        td.innerHTML='<td><input type="button" value="确定" class="btn" id="btn-confirm"/><input type="button" value="取消" class="btn" id="btn-cancel"/>';
+        table.appendChild(tr);
         current.self=table;
     }
 
-    function changeDate(e,callback){
+    function changeDate(e){
         var target=util.getTarget(e);
         document.getElementsByTagName('td')[current.firstDay+current.day+7].className='show';
         current.day=parseInt(target.innerHTML);
         var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
         td.className='showDate';
-        current.select.value=current.year+'-'+current.month+'-'+current.day;
+    }
+
+    function selectConfirm(){
+        if(current.method==true){
+            current.select.value=current.year+'/'+current.month+'/'+current.day;
+            $(current.self).fadeOut(500);
+        }else{
+            return;
+        }
+
+    }
+    function selectCancel(){
         $(current.self).fadeOut(500);
-        callback();
     }
     function nextMonth(){
         current.self.parentNode.removeChild(current.self);
@@ -204,6 +222,29 @@
         getArr();
         createTable(current);
     }
+    function getDays(e){
+        var target=util.getTarget(e);
+        if($('td').hasClass('showDate')){
+            current.lastDay.day=current.day;
+            current.lastDay.month=current.month;
+            current.lastDay.year=current.year;
+            changeDate(e);
+            //判断两点之间的间隔
+        }else{
+            if( document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='show'){
+                changeDate(e);
+            }else if(document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='no-show'){
+                current.day=target;
+                if(current.day<7){
+                    previousMonth();
+                }
+                else{
+                    nextMonth();
+                }
+            }
+        }
+
+    }
     function init(){
         getCurrentTime();
         getMonthDays();
@@ -211,10 +252,23 @@
         createTable(current);
         current.self.className='table_hide';
     }
-
     init();
+    $('select#select-type').change(function(){
+        var options=$("#select-type option:selected");
+        if(options.val()=='选择时间点'){
+            current.method=true;
+        }else{
+            current.method=false;
+        }
+    });
     //先做日历身
-    $(document).delegate('.show', 'click', changeDate);
+    $(document).delegate('.show', 'click', function(){
+        if(current.method==true){
+            changeDate(event);
+        }else{
+            getDays(event);
+        }
+    });
     $(document).delegate('#btn-next','click',nextMonth);
     $(document).delegate('#btn-previous','click',previousMonth);
     //显示当前日期的特殊，点击某个日期则给这个日期特殊
@@ -225,6 +279,14 @@
     $(document).delegate('#select-date','click',function(){
         $('table').fadeToggle();
     });
-
+    $(document).delegate('#btn-confirm','click',selectConfirm);
+    $(document).delegate('#btn-cancel','click',selectCancel)
+    //选择日历日期的选择方式
+    //1.日历单选模式，现在的方法不变
+    //2.日历的日期间隔选择模式
+    //需要增加的方法：日历的选择方法
+    //改变选择方法，改变的show日期的方法
+    //日历选择后弹出一个窗口
+    //点击其中一个日期，再选中另外一个日期
 
 })();
