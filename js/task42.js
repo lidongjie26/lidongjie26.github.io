@@ -24,7 +24,8 @@
         self:null,
         select:document.getElementById('select-date'),
         method:true,
-        lastDay:{}
+        first:null,
+        second:null
     }
     var util={
         addHandler:function(element,type,handle){
@@ -158,7 +159,8 @@
             current.select.value=current.year+'/'+current.month+'/'+current.day;
             $(current.self).fadeOut(500);
         }else{
-            return;
+            current.select.value=current.first.year+'/'+current.first.month+'/'+current.first.day+"~"+current.second.year+'/'+current.second.month+'/'+current.second.day;
+            $(current.self).fadeOut(500);
         }
 
     }
@@ -192,6 +194,7 @@
         getMonthDays();
         getArr();
         createTable(current);
+        renderTd(current.first,current.second);
     }
     function previousMonth(){
         current.self.parentNode.removeChild(current.self);
@@ -221,17 +224,26 @@
         getMonthDays();
         getArr();
         createTable(current);
+        renderTd(current.first,current.second);
     }
     function getDays(e){
         var target=util.getTarget(e);
-        if($('td').hasClass('showDate')){
-            current.lastDay.day=current.day;
-            current.lastDay.month=current.month;
-            current.lastDay.year=current.year;
-            changeDate(e);
+        var last;
+        current.day=parseInt(target.innerHTML);
+        if(current.first!==null){
+            var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
+            td.className='showDate';
+            var second=deepClone(current);
+            current.second=second;
+            reorder(current.first,current.second);
+            renderTd(current.first,current.second);
             //判断两点之间的间隔
         }else{
-            if( document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='show'){
+            last=deepClone(current);
+            current.first=last;
+            var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
+            td.className='showDate';
+            /*if( document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='show'){
                 changeDate(e);
             }else if(document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='no-show'){
                 current.day=target;
@@ -241,9 +253,40 @@
                 else{
                     nextMonth();
                 }
+            }*/
+        }
+        console.log(current.first);
+        console.log(current.second);
+    }
+    function renderTd(first,second){
+        if(first!==null&&second!==null){
+            if(first.year!==second.year){
+                if(current.year==first.year&&current.month==first.month){
+                    for(var i=first.firstDay+first.day+8;i<first.firstDay+first.monthDays+7;i++){
+                        document.getElementsByTagName('td')[i].className='select';
+                    }
+                }else if(current.year==second.year&&current.month==second.month){
+                    for(var i=8;i<second.firstDay+second.day+7;i++){
+                        document.getElementsByTagName('td')[i].className='select';
+                    }
+                }
             }
         }
 
+    }
+    //深拷贝
+    function deepClone(initalObj) {
+        var obj = {};
+        obj = JSON.parse(JSON.stringify(initalObj));
+        return obj;
+    }
+    //两个对象排序
+    function reorder(last,current){
+        if(last.year>current.year||(last.year==current.year&&last.month>current.month)||(last.year==current.year&&last.month==current.year&&last.day>current.day)){
+            var x=deepClone(last);
+            last=deepClone(current);
+            current=deepClone(x);
+        }
     }
     function init(){
         getCurrentTime();
@@ -254,6 +297,7 @@
     }
     init();
     $('select#select-type').change(function(){
+        current.select.value='';
         var options=$("#select-type option:selected");
         if(options.val()=='选择时间点'){
             current.method=true;

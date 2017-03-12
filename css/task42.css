@@ -18,12 +18,16 @@ td{
     padding:0;
 }
 .no-show{
-    background:#5a5b5b;
+    background:	#D3D3D3;
     color:#fff;
 }
 .show{
     background:#0063dc;
     color:#fff;
+}
+.select{
+    background: #4e667d;
+    color: #ffffff;
 }
 .showDate{
     border:1px solid #f00;
@@ -60,6 +64,7 @@ tr{
     font: 16px "Microsoft YaHei UI";
     border-radius: 5px;
     display:inline-block;
+    text-align:center;
 }
 .btn{
     display:inline;
