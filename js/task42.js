@@ -23,10 +23,11 @@
         weekName:['日','一','二','三','四','五','六'],
         self:null,
         select:document.getElementById('select-date'),
-        method:true,
-        first:null,
-        second:null
-    }
+        method:true
+    };
+    var first=null;
+    var second=null;
+    var x=null;
     var util={
         addHandler:function(element,type,handle){
             if(element.addEventListener){
@@ -159,7 +160,7 @@
             current.select.value=current.year+'/'+current.month+'/'+current.day;
             $(current.self).fadeOut(500);
         }else{
-            current.select.value=current.first.year+'/'+current.first.month+'/'+current.first.day+"~"+current.second.year+'/'+current.second.month+'/'+current.second.day;
+            current.select.value=first.year+'/'+first.month+'/'+first.day+"~"+second.year+'/'+second.month+'/'+second.day;
             $(current.self).fadeOut(500);
         }
 
@@ -194,7 +195,7 @@
         getMonthDays();
         getArr();
         createTable(current);
-        renderTd(current.first,current.second);
+        renderTd(first,second);
     }
     function previousMonth(){
         current.self.parentNode.removeChild(current.self);
@@ -224,39 +225,23 @@
         getMonthDays();
         getArr();
         createTable(current);
-        renderTd(current.first,current.second);
+        renderTd(first,second);
     }
     function getDays(e){
         var target=util.getTarget(e);
-        var last;
         current.day=parseInt(target.innerHTML);
-        if(current.first!==null){
+        if(first!==null){
             var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
             td.className='showDate';
-            var second=deepClone(current);
-            current.second=second;
-            reorder(current.first,current.second);
-            renderTd(current.first,current.second);
+            second=deepClone(current);
+            reorder();
+            renderTd(first,second);
             //判断两点之间的间隔
         }else{
-            last=deepClone(current);
-            current.first=last;
+            first=deepClone(current);
             var td=document.getElementsByTagName('td')[current.firstDay+current.day+7];
             td.className='showDate';
-            /*if( document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='show'){
-                changeDate(e);
-            }else if(document.getElementsByTagName('td')[current.firstDay+current.day+7].className=='no-show'){
-                current.day=target;
-                if(current.day<7){
-                    previousMonth();
-                }
-                else{
-                    nextMonth();
-                }
-            }*/
         }
-        console.log(current.first);
-        console.log(current.second);
     }
     function renderTd(first,second){
         if(first!==null&&second!==null){
@@ -275,18 +260,41 @@
 
     }
     //深拷贝
-    function deepClone(initalObj) {
-        var obj = {};
-        obj = JSON.parse(JSON.stringify(initalObj));
-        return obj;
+    function isClass(o){
+        if(o===null) return "Null";
+        if(o===undefined) return "Undefined";
+        return Object.prototype.toString.call(o).slice(8,-1);
+    }
+    function deepClone(obj){
+        var result;
+        var oClass=isClass(obj);
+        if(oClass==="Object"){
+            result={};
+        }else if(oClass==="Array"){
+            result=[];
+        }else{
+            return obj;
+        }
+        for(var key in obj){
+            var copy=obj[key];
+            if(isClass(copy)=="Object"){
+                result[key]=arguments.callee(copy);//递归调用
+            }else if(isClass(copy)=="Array"){
+                result[key]=arguments.callee(copy);
+            }else{
+                result[key]=obj[key];
+            }
+        }
+        return result;
     }
     //两个对象排序
-    function reorder(last,current){
-        if(last.year>current.year||(last.year==current.year&&last.month>current.month)||(last.year==current.year&&last.month==current.year&&last.day>current.day)){
-            var x=deepClone(last);
-            last=deepClone(current);
-            current=deepClone(x);
+    function reorder(){
+        if((first.year>second.year)||(first.year==second.year&&first.month>second.month)||(first.year==second.year&&first.month==second.month&&first.day>second.day)){
+            first = {first: second, second : first};
+            second = first.second;
+            first = first.first;
         }
+
     }
     function init(){
         getCurrentTime();
