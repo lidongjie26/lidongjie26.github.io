@@ -256,6 +256,12 @@
                     }
                 }
             }
+            else if(first.year==second.year&&first.month==second.month){
+                for(var i=first.firstDay+first.day+8;i<second.firstDay+second.day+7;i++){
+                    document.getElementsByTagName('td')[i].className='select';
+                }
+            }
+
         }
 
     }
