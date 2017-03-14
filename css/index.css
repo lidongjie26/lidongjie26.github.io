@@ -7,3 +7,11 @@ a:link{
 a:visited{
     color:#0063dc;
 }
+.content-wrap{
+    width:400px;
+    margin:100px auto;
+    text-align:center;
+    border:1px solid #000;
+    border-radius:5px;
+    padding:20px;
+}
