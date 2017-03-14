@@ -21,9 +21,9 @@
         rows:0,//这个月日历多少行
         firstDay:0,//第一天星期几
         weekName:['日','一','二','三','四','五','六'],
-        self:null,
-        select:document.getElementById('select-date'),
-        method:true
+        self:null,//table元素
+        select:document.getElementById('select-date'),//显示元素
+        method:true//选择哪种方式
     };
     var first=null;
     var second=null;
