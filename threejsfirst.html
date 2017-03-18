@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/three.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <style>
+        *{
+            margin:0;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="WebGl-output"></div>
+    <script>
+        $(function(){
+            /*场景 相机 渲染器 光源
+            * 场景只有一种，相机有好几种
+            *
+            * */
+
+            var scene=new THREE.Scene();//定义场景
+            var camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,1000);//定义相机
+            var renderer=new THREE.WebGLRenderer();//定义渲染器
+            renderer.setClearColor(0xffffff,1.0);//设置底色
+            renderer.setSize(window.innerWidth,window.innerHeight);//渲染器的大小
+            renderer.shadowMapEnabled=true;
+
+            var axes=new THREE.AxisHelper(20);//定义一个坐标
+            scene.add(axes);//坐标加入到容器中
+
+            var planeGeometry=new THREE.PlaneGeometry(60,20,1,1);//一个平面的大小
+            var planeMaterial=new THREE.MeshLambertMaterial({color:0xffffff});//平面的材质（颜色和透明度等等）
+            var plane=new THREE.Mesh(planeGeometry,planeMaterial);
+            plane.rotation.x=-0.5*Math.PI;//旋转角度
+            plane.position.set(15,0,0);
+            scene.add(plane);
+
+            var cubeGeometry=new THREE.CubeGeometry(4,4,4); //几何外形
+            var cubeMaterial=new THREE.MeshLambertMaterial({color:0xff0000,wireframe:true});//wireframe是线框属性
+            var cube=new THREE.Mesh(cubeGeometry,cubeMaterial);//材质和几何外形是其参数
+            cube.position.set(-4,3,0);
+            scene.add(cube);
+
+            var sphereGeometry=new THREE.SphereGeometry(4,20,20);
+            var sphereMatherial=new THREE.MeshLambertMaterial({
+                color:0x7777fff,wireframe:true
+            });
+            var sphere=new THREE.Mesh(sphereGeometry,sphereMatherial);
+            sphere.position.set(20,4,2);
+
+            scene.add(sphere);
+            plane.receiveShadow=true;
+            cube.castShadow=true;
+            sphere.castShadow=true;
+
+            camera.position.set(-30,40,30);
+            camera.lookAt(scene.position);
+
+            var spotLight=new THREE.SpotLight(0xffffff);
+            spotLight.position.set(-40,60,-10);
+            scene.add(spotLight);
+
+            spotLight.castShadow=true;
+
+            $('#WebGl-output').append(renderer.domElement);
+            renderer.render(scene,camera);
+            function renderScene(){
+                requestAnimationFrame(renderScene);
+                renderer.render(scene,camera);
+            }
+            renderScene();
+
+        });
+    </script>
+</body>
+</html>
