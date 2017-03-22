@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <title>Location</title>
     <script src="js/jquery-3.1.1.min.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .btn{
+            display: block;
+            border:none;
+            width: 200px;
+            height:100px;
+            background:#0063dc;
+            color:#ffffff;
+            font-size:40px;
+            margin:30px auto;
+
+        }
+        table{
+            margin:20px auto ;
+        }
+        th,td{
+            width:100px;
+            height:30px;
+        }
+    </style>
 </head>
 <body>
     <input type="button" value="获取位置" class="btn" onclick="findMe()"/>
-    <table>
+    <table cellspacing="0" cellpadding="0" border="1">
         <tr>
             <th>经度</th>
             <td id="lng"></td>
