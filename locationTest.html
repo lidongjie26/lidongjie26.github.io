@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <input type="button" value="获取位置" class="btn" onclick="findMe()"/>
+    <table>
+        <tr>
+            <th>经度</th>
+            <td id="lng"></td>
+        </tr>
+        <tr>
+            <th>纬度</th>
+            <td id="lat"></td>
+        </tr>
+        <tr>
+            <th>精确度</th>
+            <td id="accuracy"></td>
+        </tr>
+    </table>
+    <script>
+        function findMe(){
+            if(!navigator.geolocation){
+                alert("定位失败");
+            }else{
+                navigator.geolocation.getCurrentPosition(success,fail,option);
+            }
+        }
+        function success(position){
+            var lng=position.coords.longitude;
+            var lat=position.coords.latitude;
+            var accuracy=position.coords.accuracy;
+            $('#lng')[0].innerHTML=lng;
+            $('#lat')[0].innerHTML=lat;
+            $('#accuracy')[0].innerHTML=accuracy;
+        }
+        function fail(error){
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    04
+                    alert("定位失败,用户拒绝请求地理定位");
+                    05
+                    break;
+                    06
+                case error.POSITION_UNAVAILABLE:
+                    07
+                    alert("定位失败,位置信息是不可用");
+                    08
+                    break;
+                    09
+                case error.TIMEOUT:
+                    10
+                    alert("定位失败,请求获取用户位置超时");
+                    11
+                    break;
+                    12
+                case error.UNKNOWN_ERROR:
+                    13
+                    alert("定位失败,定位系统失效");
+                    14
+                    break;
+                    15
+            }
+        }
+        var option={
+            enableHighAccuracy: true,
+            maximumAge        : 30000,
+            timeout           : 27000
+        };
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>ajaxandjson</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>Change Name</h1>
+    <table class="wrap" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>name</th>
+            <th>country</th>
+        </tr>
+        <tr>
+            <td id="name">小李</td>
+            <td id="country">中国</td>
+        </tr>
+    </table>
+    <input type="button" value="change English" onclick="loadJSON()">
+    <script type="application/javascript">
+        function loadJSON(){
+            var dateFile="/json/date.txt";
+            var http_request=new XMLHttpRequest();
+            try {
+                http_request = new XMLHttpRequest();
+            }catch(e){
+                try{
+                    http_request=new ActiveXObject("Msxm12.XMLHTTP");
+                }catch(e){
+                    try{
+                        http_request=new ActiveXObject("Microsoft.XMLHTTP");
+                    }catch(e){
+                        alert("Your browser broke!");
+                        return false;
+                    }
+                }
+            }
+            http_request.onreadystatechange=function(){
+                if(http_request.readyState==4){
+                    var jsonObj=JSON.parse(http_request.responseText);
+
+                    document.getElementById('name').innerHTML=jsonObj.name;
+                    document.getElementById('country').innerHTML=jsonObj.country;
+
+                }
+            }
+            http_request.open('GET',dateFile,true);
+            http_request.send();
+        }
+    </script>
+</body>
+</html>
