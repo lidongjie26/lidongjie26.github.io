@@ -9,10 +9,15 @@
         var ishttps = 'https:' == document.location.protocol ? true: false;
         var ua = navigator.userAgent.toLowerCase();
         var isIOS=/iphone|ipad|ipod/.test(ua);
+        var targetProtocol = "http:";
+        var newHref=targetProtocol+ window.location.href.substring(window.location.protocol.length);
         console.log(ishttps);
         console.log(isIOS);
+        console.log(newHref);
+
         if(ishttps&&isIOS){
             alert("https&IOS");
+            window.location=newHref;
         }
     </script>
 
