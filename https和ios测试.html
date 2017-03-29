@@ -15,7 +15,7 @@
         console.log(isIOS);
         console.log(newHref);
         if(ishttps&&isIOS){
-            if(confirm("此链接为https,苹果手机无法使用定位功能，是否跳转到http？")){
+            if(confirm("苹果手机在https下无法使用定位功能，是否跳转到http？")){
                 window.location=newHref
                 console.log(window.location);
             }
