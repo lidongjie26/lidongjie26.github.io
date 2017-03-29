@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        var ishttps = 'https:' == document.location.protocol ? true: false;
+        var ua = navigator.userAgent.toLowerCase();
+        var isIOS=/iphone|ipad|ipod/.test(ua);
+        console.log(ishttps);
+        console.log(isIOS);
+        if(ishttps&&isIOS){
+            alert("https&IOS");
+        }
+    </script>
+
+</body>
+</html>
