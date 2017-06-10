@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset = 'utf-8'>
+	<title>Document</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div>Hello World!</div>
+	<div>你好，世界</div>
+	<div id='app1'>
+		{{message}}
+	</div>
+
+	<div id='app2' v-bind:title='message'>
+		鼠标停在上面时显示时间
+	</div>
+
+	<div id='app3' v-if='seen'>
+		看见我了吗？
+	</div>
+
+	<div id='app4'>
+		<ol>
+			<li v-for='todo in todos'>
+				{{todo.text}}
+			</li>
+		</ol>
+	</div>
+
+	<div id='app5'>
+		<p>{{message}}</p>
+		<button v-on:click = 'reverseMessage'>逆转消息</button>
+	</div>
+
+	<div id='app6'>
+		<p>{{message}}</p>
+		<input v-model='message'>
+	</div>
+
+	<div id='app7'>
+		<ol>
+			<todo-item v-for='item in geohey' v-bind:todo='item'></todo-item>
+		</ol>
+	</div>
+
+	<div id='app8'>
+		<parent></parent>
+		<my-component></my-component>
+	</div>
+	<script>
+		var app = new Vue({
+			el: '#app1',
+			data: {
+				message: 'hello Vue!'
+			}
+		});
+		//所有元素都是动态绑定，响应式的
+		var app2 = new Vue({
+			el: '#app2',
+			data:{
+				message: '今天是'+ new Date()
+			}
+		});
+
+		var app3 = new Vue({
+			el: '#app3',
+			data:{
+				seen: true
+			}
+		});
+	
+		var app4 = new Vue({
+			el: '#app4',
+			data:{
+				todos:[
+					{text: '好好学习'},
+					{text: '天天向上'},
+					{text: '学好前端，走遍天下都不怕'}
+
+				]
+			}
+		});
+
+		var app5 = new Vue({
+			el: '#app5',
+			data:{
+				message: 'hello vue.js!'
+			},
+			methods:{
+				reverseMessage: function(){
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		});
+
+		var app6 = new Vue({
+			el: '#app6',
+			data:{
+				message: 'hello vue.js'
+			}
+		});
+
+		Vue.component('todo-item',{
+			props: ['todo'],
+			template: '<li>{{todo.text}}</li>'
+		});
+		//组件构造器和组件的注册，可分解为两步
+		var myComponent = Vue.extend({
+			template:'<div>hello vue.js!</div>'
+		});
+		var parent = Vue.extend({
+			template:'<div>parent<child></child><child></child></div>',
+			components:{
+				'child': myComponent
+			}
+		});
+		Vue.component('parent',parent);
+		//局部组件，也是组件的嵌套
+		Vue.component('my-component',myComponent); //全局组件
+		
+		var app8 = new Vue({
+			el: '#app8'
+		});
+
+		var app7 = new Vue({
+			el: '#app7',
+			data:{
+				geohey:[
+					{text: '数据上图'},
+					{text: '数据编辑'},
+					{text: '数据涂鸦'}
+				]
+			}
+		});
+		//元素绑定都是响应式的，发生变化元素也发生变化
+		//元素内容绑定使用{{}}，元素属性绑定使用''
+		//绑定属性 v-bind ,绑定循环 v-for ,绑定条件 v-if
+		//绑定事件 v-on 绑定 表单输入和应用 v-model
+		//
+	</script>
+</body>
+</html>
